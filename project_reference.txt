@@ -1,0 +1,761 @@
+# Main Dashboard Data API Response (useDashboard)
+
+## API Endpoint
+```
+GET /dashboard/?period=month&startDate=2024-01-01T00:00:00.000Z&endDate=2024-01-31T23:59:59.999Z
+```
+
+## Response Structure
+
+```json
+{
+  "success": true,
+  "data": {
+    "period": "month",
+    "dateRange": {
+      "start": "2024-01-01T00:00:00.000Z",
+      "end": "2024-01-31T23:59:59.999Z"
+    },
+    "today": {
+      "sales": {
+        "total": 15750.00,
+        "count": 28,
+        "items": 45,
+        "growth": 12.5,
+        "topProducts": [
+          {
+            "_id": "64f1a2b3c4d5e6f7a8b9c0d1",
+            "itemName": "Premium Coffee Beans",
+            "totalQuantity": 8,
+            "totalRevenue": 207.92
+          },
+          {
+            "_id": "64f1a2b3c4d5e6f7a8b9c0d2",
+            "itemName": "Wireless Bluetooth Headphones",
+            "totalQuantity": 3,
+            "totalRevenue": 135.00
+          },
+          {
+            "_id": "64f1a2b3c4d5e6f7a8b9c0d3",
+            "itemName": "Organic Green Tea",
+            "totalQuantity": 12,
+            "totalRevenue": 186.00
+          }
+        ],
+        "payments": [
+          {
+            "_id": "cash",
+            "totalAmount": 8500.00,
+            "count": 15
+          },
+          {
+            "_id": "card",
+            "totalAmount": 6500.00,
+            "count": 10
+          },
+          {
+            "_id": "bank_transfer",
+            "totalAmount": 750.00,
+            "count": 3
+          }
+        ]
+      },
+      "purchases": {
+        "total": 9200.00,
+        "count": 18,
+        "items": 25,
+        "growth": 8.3
+      },
+      "expenses": {
+        "total": 1850.00,
+        "count": 12,
+        "categories": [
+          {
+            "_id": "rent",
+            "amount": 800.00
+          },
+          {
+            "_id": "utilities",
+            "amount": 450.00
+          },
+          {
+            "_id": "salaries",
+            "amount": 600.00
+          }
+        ],
+        "growth": -5.2
+      },
+      "profit": {
+        "total": 4700.00,
+        "gross": 6550.00,
+        "net": 4700.00,
+        "margin": 29.84
+      }
+    },
+    "yesterday": {
+      "sales": {
+        "total": 14000.00,
+        "count": 25,
+        "items": 38
+      },
+      "purchases": {
+        "total": 8500.00,
+        "count": 15,
+        "items": 22
+      },
+      "expenses": {
+        "total": 1950.00,
+        "count": 14,
+        "categories": [
+          {
+            "_id": "rent",
+            "amount": 800.00
+          },
+          {
+            "_id": "utilities",
+            "amount": 500.00
+          },
+          {
+            "_id": "salaries",
+            "amount": 650.00
+          }
+        ]
+      },
+      "profit": {
+        "total": 3550.00,
+        "gross": 5500.00,
+        "net": 3550.00,
+        "margin": 25.36
+      }
+    },
+    "sales": {
+      "analytics": [
+        {
+          "_id": "2024-01-01",
+          "totalSales": 12000.00,
+          "count": 20
+        },
+        {
+          "_id": "2024-01-02",
+          "totalSales": 13500.00,
+          "count": 22
+        },
+        {
+          "_id": "2024-01-03",
+          "totalSales": 11800.00,
+          "count": 18
+        },
+        {
+          "_id": "2024-01-04",
+          "totalSales": 14200.00,
+          "count": 25
+        },
+        {
+          "_id": "2024-01-05",
+          "totalSales": 15800.00,
+          "count": 28
+        },
+        {
+          "_id": "2024-01-06",
+          "totalSales": 16500.00,
+          "count": 30
+        },
+        {
+          "_id": "2024-01-07",
+          "totalSales": 17200.00,
+          "count": 32
+        },
+        {
+          "_id": "2024-01-08",
+          "totalSales": 14800.00,
+          "count": 26
+        },
+        {
+          "_id": "2024-01-09",
+          "totalSales": 16200.00,
+          "count": 29
+        },
+        {
+          "_id": "2024-01-10",
+          "totalSales": 17500.00,
+          "count": 31
+        },
+        {
+          "_id": "2024-01-11",
+          "totalSales": 13800.00,
+          "count": 24
+        },
+        {
+          "_id": "2024-01-12",
+          "totalSales": 15200.00,
+          "count": 27
+        },
+        {
+          "_id": "2024-01-13",
+          "totalSales": 16800.00,
+          "count": 30
+        },
+        {
+          "_id": "2024-01-14",
+          "totalSales": 18200.00,
+          "count": 33
+        },
+        {
+          "_id": "2024-01-15",
+          "totalSales": 15750.00,
+          "count": 28
+        }
+      ],
+      "total": 225000.00
+    },
+    "purchases": {
+      "analytics": [
+        {
+          "_id": "2024-01-01",
+          "totalPurchases": 8500.00,
+          "count": 12
+        },
+        {
+          "_id": "2024-01-02",
+          "totalPurchases": 9200.00,
+          "count": 15
+        },
+        {
+          "_id": "2024-01-03",
+          "totalPurchases": 7800.00,
+          "count": 10
+        },
+        {
+          "_id": "2024-01-04",
+          "totalPurchases": 10500.00,
+          "count": 18
+        },
+        {
+          "_id": "2024-01-05",
+          "totalPurchases": 11200.00,
+          "count": 20
+        },
+        {
+          "_id": "2024-01-06",
+          "totalPurchases": 9800.00,
+          "count": 16
+        },
+        {
+          "_id": "2024-01-07",
+          "totalPurchases": 10800.00,
+          "count": 19
+        },
+        {
+          "_id": "2024-01-08",
+          "totalPurchases": 9500.00,
+          "count": 17
+        },
+        {
+          "_id": "2024-01-09",
+          "totalPurchases": 10200.00,
+          "count": 18
+        },
+        {
+          "_id": "2024-01-10",
+          "totalPurchases": 11500.00,
+          "count": 21
+        },
+        {
+          "_id": "2024-01-11",
+          "totalPurchases": 8800.00,
+          "count": 14
+        },
+        {
+          "_id": "2024-01-12",
+          "totalPurchases": 9600.00,
+          "count": 16
+        },
+        {
+          "_id": "2024-01-13",
+          "totalPurchases": 10400.00,
+          "count": 18
+        },
+        {
+          "_id": "2024-01-14",
+          "totalPurchases": 11800.00,
+          "count": 22
+        },
+        {
+          "_id": "2024-01-15",
+          "totalPurchases": 9200.00,
+          "count": 18
+        }
+      ],
+      "total": 150000.00
+    },
+    "expenses": {
+      "analytics": [
+        {
+          "_id": "2024-01-01",
+          "totalExpenses": 1800.00,
+          "count": 10
+        },
+        {
+          "_id": "2024-01-02",
+          "totalExpenses": 1950.00,
+          "count": 12
+        },
+        {
+          "_id": "2024-01-03",
+          "totalExpenses": 1650.00,
+          "count": 8
+        },
+        {
+          "_id": "2024-01-04",
+          "totalExpenses": 2100.00,
+          "count": 14
+        },
+        {
+          "_id": "2024-01-05",
+          "totalExpenses": 1850.00,
+          "count": 11
+        },
+        {
+          "_id": "2024-01-06",
+          "totalExpenses": 2000.00,
+          "count": 13
+        },
+        {
+          "_id": "2024-01-07",
+          "totalExpenses": 1750.00,
+          "count": 9
+        },
+        {
+          "_id": "2024-01-08",
+          "totalExpenses": 1900.00,
+          "count": 12
+        },
+        {
+          "_id": "2024-01-09",
+          "totalExpenses": 2050.00,
+          "count": 15
+        },
+        {
+          "_id": "2024-01-10",
+          "totalExpenses": 1800.00,
+          "count": 10
+        },
+        {
+          "_id": "2024-01-11",
+          "totalExpenses": 1950.00,
+          "count": 12
+        },
+        {
+          "_id": "2024-01-12",
+          "totalExpenses": 1700.00,
+          "count": 9
+        },
+        {
+          "_id": "2024-01-13",
+          "totalExpenses": 1850.00,
+          "count": 11
+        },
+        {
+          "_id": "2024-01-14",
+          "totalExpenses": 2000.00,
+          "count": 13
+        },
+        {
+          "_id": "2024-01-15",
+          "totalExpenses": 1850.00,
+          "count": 12
+        }
+      ],
+      "total": 28000.00
+    },
+    "profit": {
+      "analytics": [
+        {
+          "_id": "2024-01-01",
+          "grossProfit": 3500.00,
+          "netProfit": 1700.00,
+          "margin": 29.17
+        },
+        {
+          "_id": "2024-01-02",
+          "grossProfit": 4300.00,
+          "netProfit": 2350.00,
+          "margin": 31.85
+        },
+        {
+          "_id": "2024-01-03",
+          "grossProfit": 4000.00,
+          "netProfit": 2350.00,
+          "margin": 33.90
+        },
+        {
+          "_id": "2024-01-04",
+          "grossProfit": 3700.00,
+          "netProfit": 1600.00,
+          "margin": 26.06
+        },
+        {
+          "_id": "2024-01-05",
+          "grossProfit": 4600.00,
+          "netProfit": 2750.00,
+          "margin": 30.38
+        },
+        {
+          "_id": "2024-01-06",
+          "grossProfit": 6700.00,
+          "netProfit": 4700.00,
+          "margin": 28.48
+        },
+        {
+          "_id": "2024-01-07",
+          "grossProfit": 6400.00,
+          "netProfit": 4650.00,
+          "margin": 27.03
+        },
+        {
+          "_id": "2024-01-08",
+          "grossProfit": 5300.00,
+          "netProfit": 3400.00,
+          "margin": 22.97
+        },
+        {
+          "_id": "2024-01-09",
+          "grossProfit": 6000.00,
+          "netProfit": 3950.00,
+          "margin": 24.38
+        },
+        {
+          "_id": "2024-01-10",
+          "grossProfit": 6000.00,
+          "netProfit": 4200.00,
+          "margin": 24.00
+        },
+        {
+          "_id": "2024-01-11",
+          "grossProfit": 5000.00,
+          "netProfit": 3050.00,
+          "margin": 22.10
+        },
+        {
+          "_id": "2024-01-12",
+          "grossProfit": 5600.00,
+          "netProfit": 3900.00,
+          "margin": 25.66
+        },
+        {
+          "_id": "2024-01-13",
+          "grossProfit": 6400.00,
+          "netProfit": 4550.00,
+          "margin": 27.08
+        },
+        {
+          "_id": "2024-01-14",
+          "grossProfit": 6400.00,
+          "netProfit": 4400.00,
+          "margin": 24.18
+        },
+        {
+          "_id": "2024-01-15",
+          "grossProfit": 6550.00,
+          "netProfit": 4700.00,
+          "margin": 29.84
+        }
+      ],
+      "total": {
+        "gross": 75000.00,
+        "net": 47000.00,
+        "margin": 20.89
+      }
+    },
+    "products": {
+      "topSelling": [
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0d1",
+          "itemName": "Premium Coffee Beans",
+          "totalQuantity": 125,
+          "totalRevenue": 3248.75
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0d2",
+          "itemName": "Wireless Bluetooth Headphones",
+          "totalQuantity": 45,
+          "totalRevenue": 2025.00
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0d3",
+          "itemName": "Organic Green Tea",
+          "totalQuantity": 89,
+          "totalRevenue": 1379.50
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0d4",
+          "itemName": "Chocolate Chip Cookies",
+          "totalQuantity": 156,
+          "totalRevenue": 1402.44
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0d5",
+          "itemName": "Vitamin C Tablets",
+          "totalQuantity": 78,
+          "totalRevenue": 994.50
+        }
+      ],
+      "categorySales": [
+        {
+          "_id": "beverages",
+          "totalSales": 85000.00,
+          "count": 245
+        },
+        {
+          "_id": "electronics",
+          "totalSales": 65000.00,
+          "count": 89
+        },
+        {
+          "_id": "snacks",
+          "totalSales": 45000.00,
+          "count": 312
+        },
+        {
+          "_id": "health_wellness",
+          "totalSales": 30000.00,
+          "count": 156
+        }
+      ]
+    },
+    "inventory": {
+      "status": {
+        "totalItems": 1250,
+        "totalValue": 187500.00,
+        "lowStockItems": 23
+      },
+      "lowStockItems": [
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0e1",
+          "variantId": "64f1a2b3c4d5e6f7a8b9c0e2",
+          "variantCode": "VAR-001",
+          "variantSku": "SKU-001-VAR1",
+          "itemName": "Premium Coffee Beans - Dark Roast",
+          "itemId": "64f1a2b3c4d5e6f7a8b9c0d1",
+          "currentStock": 3,
+          "lowStockThreshold": 15,
+          "location": {
+            "aisle": "A1",
+            "rack": "B2",
+            "bin": "C3"
+          },
+          "unitPrice": 25.99,
+          "status": "active",
+          "lowStockStatus": "critical"
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0e3",
+          "variantId": "64f1a2b3c4d5e6f7a8b9c0e4",
+          "variantCode": "VAR-002",
+          "variantSku": "SKU-002-VAR1",
+          "itemName": "Organic Green Tea - Premium",
+          "itemId": "64f1a2b3c4d5e6f7a8b9c0d3",
+          "currentStock": 7,
+          "lowStockThreshold": 20,
+          "location": {
+            "aisle": "A2",
+            "rack": "B1",
+            "bin": "C2"
+          },
+          "unitPrice": 15.50,
+          "status": "active",
+          "lowStockStatus": "new"
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0e5",
+          "variantId": "64f1a2b3c4d5e6f7a8b9c0e6",
+          "variantCode": "VAR-003",
+          "variantSku": "SKU-003-VAR1",
+          "itemName": "Wireless Headphones - Black",
+          "itemId": "64f1a2b3c4d5e6f7a8b9c0d2",
+          "currentStock": 2,
+          "lowStockThreshold": 8,
+          "location": {
+            "aisle": "C1",
+            "rack": "D2",
+            "bin": "E1"
+          },
+          "unitPrice": 45.00,
+          "status": "active",
+          "lowStockStatus": "critical"
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0e7",
+          "variantId": "64f1a2b3c4d5e6f7a8b9c0e8",
+          "variantCode": "VAR-004",
+          "variantSku": "SKU-004-VAR1",
+          "itemName": "Chocolate Cookies - Large Pack",
+          "itemId": "64f1a2b3c4d5e6f7a8b9c0d4",
+          "currentStock": 12,
+          "lowStockThreshold": 25,
+          "location": {
+            "aisle": "B1",
+            "rack": "C2",
+            "bin": "D1"
+          },
+          "unitPrice": 8.99,
+          "status": "active",
+          "lowStockStatus": "new"
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0e9",
+          "variantId": "64f1a2b3c4d5e6f7a8b9c0ea",
+          "variantCode": "VAR-005",
+          "variantSku": "SKU-005-VAR1",
+          "itemName": "Vitamin C - 1000mg",
+          "itemId": "64f1a2b3c4d5e6f7a8b9c0d5",
+          "currentStock": 8,
+          "lowStockThreshold": 20,
+          "location": {
+            "aisle": "D1",
+            "rack": "E2",
+            "bin": "F1"
+          },
+          "unitPrice": 12.75,
+          "status": "active",
+          "lowStockStatus": "ignored"
+        }
+      ],
+      "movements": [
+        {
+          "_id": "sale",
+          "count": 245,
+          "totalQuantity": 485
+        },
+        {
+          "_id": "purchase",
+          "count": 89,
+          "totalQuantity": 1250
+        },
+        {
+          "_id": "transfer",
+          "count": 34,
+          "totalQuantity": 156
+        },
+        {
+          "_id": "adjustment",
+          "count": 12,
+          "totalQuantity": 23
+        }
+      ]
+    },
+    "customers": {
+      "topCustomers": [
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0f1",
+          "name": "John Smith",
+          "totalSpent": 12500.00,
+          "transactionCount": 28
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0f2",
+          "name": "Sarah Johnson",
+          "totalSpent": 9800.00,
+          "transactionCount": 22
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0f3",
+          "name": "Michael Brown",
+          "totalSpent": 8750.00,
+          "transactionCount": 19
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0f4",
+          "name": "Emily Davis",
+          "totalSpent": 7200.00,
+          "transactionCount": 16
+        },
+        {
+          "_id": "64f1a2b3c4d5e6f7a8b9c0f5",
+          "name": "David Wilson",
+          "totalSpent": 6500.00,
+          "transactionCount": 14
+        }
+      ]
+    },
+    "payments": {
+      "methods": [
+        {
+          "_id": "cash",
+          "totalAmount": 125000.00,
+          "count": 350
+        },
+        {
+          "_id": "card",
+          "totalAmount": 85000.00,
+          "count": 245
+        },
+        {
+          "_id": "bank_transfer",
+          "totalAmount": 15000.00,
+          "count": 45
+        }
+      ]
+    },
+    "financial": {
+      "receivables": 45000.00,
+      "payables": 32000.00,
+      "netPosition": 13000.00,
+      "profitSummary": {
+        "grossProfit": 75000.00,
+        "netProfit": 47000.00,
+        "profitMargin": 20.89,
+        "expenseRatio": 12.44
+      }
+    }
+  },
+  "message": "Dashboard data retrieved successfully"
+}
+```
+
+## Data Structure Overview
+
+### Today's Data
+- **Sales**: Total revenue, transaction count, items sold, growth percentage, top products, payment methods
+- **Purchases**: Total amount, count, items purchased, growth percentage
+- **Expenses**: Total amount, count, categories breakdown, growth percentage
+- **Profit**: Total, gross, net profit, and margin percentage
+
+### Yesterday's Data
+- Similar structure to today's data for comparison purposes
+
+### Analytics Data
+- **Sales Analytics**: Daily sales data with totals and counts
+- **Purchase Analytics**: Daily purchase data with totals and counts
+- **Expense Analytics**: Daily expense data with totals and counts
+- **Profit Analytics**: Daily profit data with gross, net, and margins
+
+### Products Data
+- **Top Selling Products**: Best performing items with quantities and revenue
+- **Category Sales**: Sales breakdown by product categories
+
+### Inventory Data
+- **Status**: Total items, total value, low stock count
+- **Low Stock Items**: Detailed list of items below threshold with different status levels
+- **Movements**: Recent inventory transactions (sales, purchases, transfers, adjustments)
+
+### Customer Data
+- **Top Customers**: Best customers by total spent and transaction count
+
+### Payment Data
+- **Methods**: Payment breakdown by cash, card, and bank transfer
+
+### Financial Data
+- **Receivables**: Amount owed by customers
+- **Payables**: Amount owed to suppliers
+- **Net Position**: Overall financial position
+- **Profit Summary**: Comprehensive profit metrics
+
+## Usage Notes
+
+- All monetary values are in the base currency (e.g., USD)
+- Dates are in ISO 8601 format
+- Growth percentages can be positive or negative
+- Low stock status can be: `critical`, `new`, `ignored`, or `inactive`
+- The `_id` fields in analytics arrays represent dates for daily data
+- Location data includes aisle, rack, and bin information for inventory items
