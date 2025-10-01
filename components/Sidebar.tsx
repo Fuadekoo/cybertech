@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -9,25 +8,12 @@ import {
   ShoppingCart,
   Users,
   BarChart3,
-  Settings,
-  Menu,
   X,
   TrendingUp,
   DollarSign,
   Warehouse,
   FileText,
   Search,
-  Bell,
-  Plus,
-  ChevronDown,
-  Zap,
-  Folder,
-  Calendar,
-  Inbox,
-  Activity,
-  HelpCircle,
-  LogOut,
-  User,
   RefreshCw,
 } from "lucide-react";
 
@@ -79,31 +65,41 @@ const menuItems = [
     icon: BarChart3,
     shortcut: "⌘7",
   },
-];
-
-const sharedItems = [
   {
-    name: "Boosts",
-    href: "/boosts",
-    icon: Zap,
+    name: "Analytics Data",
+    href: "/analytics-data",
+    icon: TrendingUp,
+    shortcut: "⌘8",
   },
   {
-    name: "Documents",
-    href: "/documents",
-    icon: Folder,
+    name: "Product Data",
+    href: "/product-data",
+    icon: Package,
+    shortcut: "⌘9",
+  },
+  {
+    name: "Inventory Data",
+    href: "/inventory-data",
+    icon: Warehouse,
+    shortcut: "⌘0",
+  },
+  {
+    name: "Customer Data",
+    href: "/customer-data",
+    icon: Users,
+    shortcut: "⌘⇧1",
+  },
+  {
+    name: "Financial Data",
+    href: "/financial-data",
+    icon: DollarSign,
+    shortcut: "⌘⇧2",
   },
 ];
 
-const projects = [
-  { name: "Personal", color: "bg-green-400", href: "/projects/personal" },
-  { name: "Business", color: "bg-purple-400", href: "/projects/business" },
-  { name: "Travel", color: "bg-pink-400", href: "/projects/travel" },
-];
 
 export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
   const pathname = usePathname();
-  const [showWorkspaceMenu, setShowWorkspaceMenu] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(false);
 
   return (
     <>
@@ -190,131 +186,9 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
           })}
         </nav>
 
-        {/* Shared Section */}
-        <div className="px-4 mt-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-gray-900">Shared</h3>
-            <button className="p-1 rounded-lg hover:bg-gray-100 transition-colors">
-              <Plus className="w-4 h-4 text-gray-500" />
-            </button>
-          </div>
-          <div className="space-y-1">
-            {sharedItems.map((item) => {
-              const isActive = pathname === item.href;
-              const Icon = item.icon;
 
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`group flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${
-                    isActive
-                      ? "bg-gray-100 text-gray-900"
-                      : "text-gray-700 hover:bg-gray-50"
-                  }`}
-                >
-                  <Icon className="w-5 h-5" />
-                  <span className="text-sm font-medium">{item.name}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
 
-        {/* Projects Section */}
-        <div className="px-4 mt-6">
-          <h3 className="text-sm font-semibold text-gray-900 mb-3">Projects</h3>
-          <div className="space-y-1">
-            {projects.map((project) => (
-              <Link
-                key={project.name}
-                href={project.href}
-                className="group flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 text-gray-700 hover:bg-gray-50"
-              >
-                <div className={`w-3 h-3 rounded-sm ${project.color}`} />
-                <span className="text-sm font-medium">{project.name}</span>
-              </Link>
-            ))}
-            <button className="group flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 text-gray-500 hover:bg-gray-50 w-full">
-              <Plus className="w-4 h-4" />
-              <span className="text-sm font-medium">Add New Project</span>
-            </button>
-          </div>
-        </div>
 
-        {/* Bottom Navigation */}
-        <div className="mt-auto px-4 py-4 space-y-1">
-          <Link
-            href="/settings"
-            className="flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 text-gray-700 hover:bg-gray-50"
-          >
-            <Settings className="w-5 h-5" />
-            <span className="text-sm font-medium">Settings</span>
-          </Link>
-          <Link
-            href="/help"
-            className="flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 text-gray-700 hover:bg-gray-50"
-          >
-            <HelpCircle className="w-5 h-5" />
-            <span className="text-sm font-medium">Help</span>
-          </Link>
-        </div>
-
-        {/* User Profile */}
-        <div className="p-4 border-t border-gray-200">
-          <div className="relative">
-            <button
-              onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center space-x-3 w-full p-2 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                <User className="w-4 h-4 text-white" />
-              </div>
-              <div className="flex-1 text-left">
-                <p className="text-sm font-medium text-gray-900">Admin User</p>
-                <p className="text-xs text-gray-500">admin@cybertech.com</p>
-              </div>
-              <ChevronDown className="w-4 h-4 text-gray-400" />
-            </button>
-
-            {/* User Menu Dropdown */}
-            {showUserMenu && (
-              <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                <div className="p-3 border-b border-gray-200">
-                  <p className="text-sm font-medium text-gray-900">
-                    Admin User
-                  </p>
-                  <p className="text-xs text-gray-500">admin@cybertech.com</p>
-                </div>
-                <div className="py-1">
-                  <button className="flex items-center space-x-3 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                    <Settings className="w-4 h-4" />
-                    <span>Integrations</span>
-                  </button>
-                  <button className="flex items-center space-x-3 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                    <Activity className="w-4 h-4" />
-                    <span>History</span>
-                  </button>
-                  <button className="flex items-center space-x-3 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                    <TrendingUp className="w-4 h-4" />
-                    <span>Upgrade to Pro</span>
-                  </button>
-                  <button className="flex items-center space-x-3 w-full px-3 py-2 text-sm text-green-700 bg-green-50">
-                    <RefreshCw className="w-4 h-4" />
-                    <span>Update App</span>
-                  </button>
-                  <button className="flex items-center space-x-3 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                    <LogOut className="w-4 h-4" />
-                    <span>Logout</span>
-                  </button>
-                </div>
-                <div className="px-3 py-2 text-xs text-gray-400 border-t border-gray-200">
-                  v1.0.0 • Terms & Conditions
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
       </div>
     </>
   );
