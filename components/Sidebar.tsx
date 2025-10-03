@@ -14,6 +14,7 @@ import {
   RefreshCw,
   ShoppingCart,
   FileText,
+  Filter,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -93,6 +94,12 @@ const menuItems = [
     href: "/financial-data",
     icon: DollarSign,
     shortcut: "⌘⇧2",
+  },
+  {
+    name: "Data Filter",
+    href: "/filter",
+    icon: Filter,
+    shortcut: "⌘⇧3",
   },
 ];
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   CartesianGrid,
   Legend,
@@ -13,7 +13,7 @@ import {
   Bar,
   BarChart,
 } from "recharts";
-import { ChevronDown, Loader2, TrendingUp, DollarSign } from "lucide-react";
+import { TrendingUp, DollarSign } from "lucide-react";
 
 function TodaySalesChart() {
   // Static test data for today's sales
@@ -64,7 +64,7 @@ function TodaySalesChart() {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-700">
-              Today's Sales
+              Today&apos;s Sales
             </h3>
             <p className="text-sm text-gray-500">Real-time sales performance</p>
           </div>

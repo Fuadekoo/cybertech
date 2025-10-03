@@ -10,8 +10,6 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  Bar,
-  BarChart,
   PieChart,
   Pie,
   Cell,
@@ -155,7 +153,7 @@ function TodayExpensesChart() {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-700">
-              Today's Expenses
+              Today&apos;s Expenses
             </h3>
             <p className="text-sm text-gray-500">
               Cost management and tracking
@@ -309,7 +307,7 @@ function TodayExpensesChart() {
                 outerRadius={80}
                 fill="#8884d8"
                 dataKey="amount"
-                label={({ category, percentage }) =>
+                label={({ category, percentage }: { category: string; percentage: number }) =>
                   `${category}: ${percentage}%`
                 }
               >

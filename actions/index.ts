@@ -12,7 +12,17 @@ export * from "./customers";
 
 // Inventory Actions
 export { getLowStockItems as getInventoryLowStockItems } from "./inventory";
-export * from "./inventory";
+export {
+  getAllInventoryItems,
+  getInventoryItemById,
+  updateInventoryStock,
+  createInventoryMovement,
+  getInventoryMovements,
+  getInventoryStatistics,
+  updateLowStockStatus,
+  getInventoryByCategory,
+  searchInventoryItems,
+} from "./inventory";
 
 // Expense Actions
 export * from "./expenses";

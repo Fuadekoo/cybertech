@@ -353,7 +353,7 @@ export default function InventoryDataPage() {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({ status, percentage }) =>
+                    label={({ status, percentage }: any) =>
                       `${status} ${percentage}%`
                     }
                     outerRadius={80}

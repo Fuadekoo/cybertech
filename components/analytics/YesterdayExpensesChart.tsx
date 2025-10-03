@@ -10,8 +10,6 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  Bar,
-  BarChart,
   PieChart,
   Pie,
   Cell,
@@ -155,7 +153,7 @@ function YesterdayExpensesChart() {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-700">
-              Yesterday's Expenses
+              Yesterday&apos;s Expenses
             </h3>
             <p className="text-sm text-gray-500">
               Previous day cost management
@@ -231,7 +229,7 @@ function YesterdayExpensesChart() {
       {/* Expense Chart */}
       <div className="mb-6">
         <h4 className="text-md font-semibold text-gray-700 mb-4">
-          Yesterday's Expenses by Hour
+          Yesterday&apos;s Expenses by Hour
         </h4>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart
@@ -309,7 +307,7 @@ function YesterdayExpensesChart() {
                 outerRadius={80}
                 fill="#8884d8"
                 dataKey="amount"
-                label={({ category, percentage }) =>
+                label={({ category, percentage }: { category: string; percentage: number }) =>
                   `${category}: ${percentage}%`
                 }
               >

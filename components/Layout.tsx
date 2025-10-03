@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Sidebar from "./Sidebar";
-import { Menu, Bell, Search, User, Plus, Settings } from "lucide-react";
+import { Menu, Bell, User, Plus, Settings } from "lucide-react";
 
 interface LayoutProps {
   children: React.ReactNode;

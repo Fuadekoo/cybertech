@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import {
   CartesianGrid,
   Legend,
-  Line,
-  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -123,7 +121,7 @@ function TodayProfitChart() {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-700">
-              Today's Profit
+              Today&apos;s Profit
             </h3>
             <p className="text-sm text-gray-500">
               Revenue and profitability analysis
@@ -250,7 +248,7 @@ function TodayProfitChart() {
             Profit by Category
           </h4>
           <div className="space-y-3">
-            {profitBreakdown.map((item, index) => (
+            {profitBreakdown.map((item) => (
               <div key={item.category} className="p-4 bg-gray-50 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
                   <h5 className="font-medium text-gray-900">{item.category}</h5>

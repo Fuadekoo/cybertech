@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -10,7 +9,7 @@ async function main() {
   console.log("Skipping data cleanup for MongoDB single instance...");
 
   // --- Create Categories ---
-  const categories = [
+  const _categories = [
     "beverages",
     "electronics",
     "snacks",

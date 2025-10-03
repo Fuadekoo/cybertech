@@ -257,7 +257,7 @@ export default function ProductDataPage() {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({ category, percentage }) =>
+                    label={({ category, percentage }: any) =>
                       `${category} ${percentage}%`
                     }
                     outerRadius={80}

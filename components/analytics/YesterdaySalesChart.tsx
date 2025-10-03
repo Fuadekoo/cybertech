@@ -13,7 +13,7 @@ import {
   Bar,
   BarChart,
 } from "recharts";
-import { TrendingUp, DollarSign, ShoppingCart, Users } from "lucide-react";
+import { TrendingUp, DollarSign } from "lucide-react";
 
 function YesterdaySalesChart() {
   // Static test data for yesterday's sales
@@ -64,7 +64,7 @@ function YesterdaySalesChart() {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-700">
-              Yesterday's Sales
+              Yesterday&apos;s Sales
             </h3>
             <p className="text-sm text-gray-500">Previous day performance</p>
           </div>
@@ -132,7 +132,7 @@ function YesterdaySalesChart() {
       {/* Sales Chart */}
       <div className="mb-6">
         <h4 className="text-md font-semibold text-gray-700 mb-4">
-          Yesterday's Sales by Hour
+          Yesterday&apos;s Sales by Hour
         </h4>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart

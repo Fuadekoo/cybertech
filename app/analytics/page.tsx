@@ -73,7 +73,7 @@ export default function AnalyticsPage() {
         <div className="space-y-8 mt-8">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Yesterday's Data
+              Yesterday&apos;s Data
             </h2>
             <p className="text-gray-600">
               Previous day performance for comparison

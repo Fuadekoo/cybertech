@@ -3,7 +3,10 @@
 import { useState } from "react";
 import Layout from "../../components/Layout";
 import { useData } from "../../hooks/UseData";
-import useMutation from "../../hooks/useMutations";
+import { FilterModal } from "../../components/FilterModal";
+import { FilteredDataDisplay } from "../../components/FilteredDataDisplay";
+import { Button } from "../../components/ui/button";
+import { FilterIcon } from "lucide-react";
 import {
   getDashboardCardsData,
   getSalesAnalyticsData,
@@ -14,26 +17,18 @@ import {
   getPaymentMethodsData,
   getLowStockItems,
 } from "../../actions/dashboard";
-import {
-  LineChart,
-  Line,
-  AreaChart,
-  Area,
-  BarChart,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 
 // Dashboard Cards Component
-function DashboardCards({ data }: { data: any }) {
+interface DashboardData {
+  today: {
+    sales: { total: number; growth: number; count: number };
+    purchases: { total: number; growth: number; count: number };
+    expenses: { total: number; growth: number; count: number };
+    profit: { total: number; margin: number };
+  };
+}
+
+function DashboardCards({ data }: { data: DashboardData | null }) {
   if (!data) return null;
 
   const cards = [
@@ -104,311 +99,215 @@ function DashboardCards({ data }: { data: any }) {
   );
 }
 
-// Sales Chart Component
-function SalesChart({ data }: { data: any[] }) {
-  return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h3 className="text-lg font-semibold mb-4">Sales Analytics</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="_id" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="totalSales"
-            stroke="#8884d8"
-            strokeWidth={2}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
-// Purchases Chart Component
-function PurchasesChart({ data }: { data: any[] }) {
-  return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h3 className="text-lg font-semibold mb-4">Purchase Analytics</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <AreaChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="_id" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Area
-            type="monotone"
-            dataKey="totalPurchases"
-            stroke="#82ca9d"
-            fill="#82ca9d"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
-// Expenses Chart Component
-function ExpensesChart({ data }: { data: any[] }) {
-  return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h3 className="text-lg font-semibold mb-4">Expense Analytics</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="_id" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="totalExpenses" fill="#ffc658" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
-// Top Products Chart Component
-function TopProductsChart({ data }: { data: any[] }) {
-  return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h3 className="text-lg font-semibold mb-4">Top Selling Products</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data} layout="horizontal">
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" />
-          <YAxis dataKey="itemName" type="category" width={150} />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="totalRevenue" fill="#8884d8" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
-// Payment Methods Chart Component
-function PaymentMethodsChart({ data }: { data: any[] }) {
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-
-  return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h3 className="text-lg font-semibold mb-4">Payment Methods</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={({ name, percent }) =>
-              `${name} ${(percent * 100).toFixed(0)}%`
-            }
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="totalAmount"
-          >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
-// Top Customers Table Component
-function TopCustomersTable({ data }: { data: any[] }) {
-  return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h3 className="text-lg font-semibold mb-4">Top Customers</h3>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Customer
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Total Spent
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Transactions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {data.map((customer, index) => (
-              <tr key={index}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {customer.name}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  ${customer.totalSpent.toFixed(2)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {customer.transactionCount}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-// Low Stock Items Table Component
-function LowStockItemsTable({ data }: { data: any[] }) {
-  return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h3 className="text-lg font-semibold mb-4">Low Stock Items</h3>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Product
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Current Stock
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Threshold
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {data.map((item, index) => (
-              <tr key={index}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {item.itemName}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {item.currentStock}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {item.lowStockThreshold}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span
-                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      item.lowStockStatus === "critical"
-                        ? "bg-red-100 text-red-800"
-                        : item.lowStockStatus === "new"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-gray-100 text-gray-800"
-                    }`}
-                  >
-                    {item.lowStockStatus}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
 // Main Dashboard Component
 export default function Dashboard() {
-  const [dateRange, setDateRange] = useState({
+  const [dateRange] = useState({
     start: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     end: new Date(),
   });
 
+  // Filter modal state
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  interface FilteredData {
+    sales: {
+      total: number;
+      count: number;
+      items: number;
+      growth: number;
+      topProducts: Array<{
+        _id: string;
+        itemName: string;
+        totalQuantity: number;
+        totalRevenue: number;
+      }>;
+      payments: Array<{
+        _id: string;
+        totalAmount: number;
+        count: number;
+      }>;
+    };
+    purchases: {
+      total: number;
+      count: number;
+      items: number;
+      growth: number;
+    };
+    expenses: {
+      total: number;
+      count: number;
+      categories: Array<{
+        _id: string;
+        amount: number;
+      }>;
+      growth: number;
+    };
+    profit: {
+      total: number;
+      gross: number;
+      net: number;
+      margin: number;
+    };
+    dateRange: {
+      start: string;
+      end: string;
+    };
+  }
+
+  const [filteredData, setFilteredData] = useState<FilteredData | null>(null);
+  const [isFilterLoading, setIsFilterLoading] = useState(false);
+
   // Data fetching hooks
-  const [cardData, isLoadingCardData, refreshCardData] = useData(
+  const [cardData, isLoadingCardData] = useData(
     getDashboardCardsData,
     () => {}
   );
 
-  const [salesData, isLoadingSales, refreshSales] = useData(
+  const [salesData] = useData(
     () => getSalesAnalyticsData(dateRange.start, dateRange.end),
-    () => {},
-    dateRange.start,
-    dateRange.end
-  );
-
-  const [purchasesData, isLoadingPurchases, refreshPurchases] = useData(
-    () => getPurchaseAnalyticsData(dateRange.start, dateRange.end),
-    () => {},
-    dateRange.start,
-    dateRange.end
-  );
-
-  const [expensesData, isLoadingExpenses, refreshExpenses] = useData(
-    () => getExpenseAnalyticsData(dateRange.start, dateRange.end),
-    () => {},
-    dateRange.start,
-    dateRange.end
-  );
-
-  const [topProductsData, isLoadingTopProducts, refreshTopProducts] = useData(
-    () => getTopProductsData(dateRange.start, dateRange.end),
-    () => {},
-    dateRange.start,
-    dateRange.end
-  );
-
-  const [topCustomersData, isLoadingTopCustomers, refreshTopCustomers] =
-    useData(
-      () => getTopCustomersData(dateRange.start, dateRange.end),
-      () => {},
-      dateRange.start,
-      dateRange.end
-    );
-
-  const [paymentMethodsData, isLoadingPaymentMethods, refreshPaymentMethods] =
-    useData(
-      () => getPaymentMethodsData(dateRange.start, dateRange.end),
-      () => {},
-      dateRange.start,
-      dateRange.end
-    );
-
-  const [lowStockData, isLoadingLowStock, refreshLowStock] = useData(
-    getLowStockItems,
     () => {}
   );
 
-  // Mutation hooks for CRUD operations
-  const [executeDelete, isLoadingDelete] = useMutation(
-    async (id: string) => {
-      // Example delete function - replace with actual API call
-      console.log("Deleting item:", id);
-      return { success: true, message: "Item deleted successfully" };
-    },
-    (res) => {
-      if (res.success) {
-        // Refresh all data after successful deletion
-        refreshCardData();
-        refreshSales();
-        refreshPurchases();
-        refreshExpenses();
-        refreshTopProducts();
-        refreshTopCustomers();
-        refreshPaymentMethods();
-        refreshLowStock();
-      }
-    }
+  const [purchasesData] = useData(
+    () => getPurchaseAnalyticsData(dateRange.start, dateRange.end),
+    () => {}
   );
 
-  const handleDateRangeChange = (start: Date, end: Date) => {
-    setDateRange({ start, end });
+  const [expensesData] = useData(
+    () => getExpenseAnalyticsData(dateRange.start, dateRange.end),
+    () => {}
+  );
+
+  const [topProductsData] = useData(
+    () => getTopProductsData(dateRange.start, dateRange.end),
+    () => {}
+  );
+
+  const [topCustomersData] = useData(
+    () => getTopCustomersData(dateRange.start, dateRange.end),
+    () => {}
+  );
+
+  const [paymentMethodsData] = useData(
+    () => getPaymentMethodsData(dateRange.start, dateRange.end),
+    () => {}
+  );
+
+  const [lowStockData] = useData(getLowStockItems, () => {});
+
+  // Filter functions
+  const handleFilter = async (filterDateRange: {
+    from: Date | undefined;
+    to: Date | undefined;
+  }) => {
+    if (!filterDateRange.from || !filterDateRange.to) return;
+
+    setIsFilterLoading(true);
+
+    try {
+      // Simulate API call - in real app, this would fetch filtered data
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Generate sample filtered data based on the project reference structure
+      const sampleFilteredData = {
+        sales: {
+          total: 15750.0,
+          count: 28,
+          items: 45,
+          growth: 12.5,
+          topProducts: [
+            {
+              _id: "64f1a2b3c4d5e6f7a8b9c0d1",
+              itemName: "Premium Coffee Beans",
+              totalQuantity: 8,
+              totalRevenue: 207.92,
+            },
+            {
+              _id: "64f1a2b3c4d5e6f7a8b9c0d2",
+              itemName: "Wireless Bluetooth Headphones",
+              totalQuantity: 3,
+              totalRevenue: 135.0,
+            },
+            {
+              _id: "64f1a2b3c4d5e6f7a8b9c0d3",
+              itemName: "Organic Green Tea",
+              totalQuantity: 12,
+              totalRevenue: 186.0,
+            },
+          ],
+          payments: [
+            { _id: "cash", totalAmount: 8500.0, count: 15 },
+            { _id: "card", totalAmount: 6500.0, count: 10 },
+            { _id: "bank_transfer", totalAmount: 750.0, count: 3 },
+          ],
+        },
+        purchases: {
+          total: 9200.0,
+          count: 18,
+          items: 25,
+          growth: 8.3,
+        },
+        expenses: {
+          total: 1850.0,
+          count: 12,
+          categories: [
+            { _id: "rent", amount: 800.0 },
+            { _id: "utilities", amount: 450.0 },
+            { _id: "salaries", amount: 600.0 },
+          ],
+          growth: -5.2,
+        },
+        profit: {
+          total: 4700.0,
+          gross: 6550.0,
+          net: 4700.0,
+          margin: 29.84,
+        },
+        dateRange: {
+          start: filterDateRange.from.toISOString(),
+          end: filterDateRange.to.toISOString(),
+        },
+      };
+
+      setFilteredData(sampleFilteredData);
+    } catch (error) {
+      console.error("Error filtering data:", error);
+    } finally {
+      setIsFilterLoading(false);
+    }
+  };
+
+  const handleRefreshFilter = () => {
+    if (filteredData) {
+      // Re-apply the same filter
+      const currentFilter = {
+        from: new Date(filteredData.dateRange.start),
+        to: new Date(filteredData.dateRange.end),
+      };
+      handleFilter(currentFilter);
+    }
+  };
+
+  const handleExportFilter = () => {
+    if (!filteredData) return;
+
+    const dataToExport = {
+      dateRange: filteredData.dateRange,
+      data: filteredData,
+    };
+
+    const blob = new Blob([JSON.stringify(dataToExport, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `filtered-data-${
+      filteredData.dateRange.start.split("T")[0]
+    }-to-${filteredData.dateRange.end.split("T")[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   if (isLoadingCardData) {
@@ -426,30 +325,360 @@ export default function Dashboard() {
     <Layout>
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-          <p className="text-gray-600">Business analytics and insights</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Dashboard
+              </h1>
+              <p className="text-gray-600">Business analytics and insights</p>
+            </div>
+            <Button
+              onClick={() => setIsFilterModalOpen(true)}
+              className="flex items-center gap-2"
+            >
+              <FilterIcon className="h-4 w-4" />
+              Filter Data
+            </Button>
+          </div>
+        </div>
+
+        {/* Filtered Data Display - At the Top */}
+        {filteredData && (
+          <div className="mb-8">
+            <div className="mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="h-1 w-8 bg-blue-500 rounded"></div>
+                <h2 className="text-lg font-semibold text-blue-900">
+                  Filtered Results
+                </h2>
+              </div>
+              <p className="text-sm text-gray-600">
+                Data filtered by your selected date range appears below
+              </p>
+            </div>
+            <FilteredDataDisplay
+              data={filteredData}
+              isLoading={isFilterLoading}
+              dateRange={{
+                from: new Date(filteredData.dateRange.start),
+                to: new Date(filteredData.dateRange.end),
+              }}
+              onRefresh={handleRefreshFilter}
+              onExport={handleExportFilter}
+            />
+          </div>
+        )}
+
+        {/* Regular Dashboard Content */}
+        <div className={filteredData ? "mt-12" : ""}>
+          <div className="mb-4">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="h-1 w-8 bg-gray-400 rounded"></div>
+              <h2 className="text-lg font-semibold text-gray-900">
+                Dashboard Overview
+              </h2>
+            </div>
+            <p className="text-sm text-gray-600">
+              General dashboard metrics and analytics
+            </p>
+          </div>
         </div>
 
         {/* Dashboard Cards */}
         <DashboardCards data={cardData} />
 
-        {/* Charts Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <SalesChart data={salesData || []} />
-          <PurchasesChart data={purchasesData || []} />
-          <ExpensesChart data={expensesData || []} />
-          <PaymentMethodsChart data={paymentMethodsData || []} />
+        {/* Sales Analytics Cards */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <div className="h-1 w-6 bg-green-500 rounded"></div>
+            Sales Analytics
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {salesData?.map(
+              (
+                sale: { _id: string; count: number; totalSales: number },
+                index: number
+              ) => (
+                <div
+                  key={index}
+                  className="bg-white p-4 rounded-lg border shadow-sm"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-900">{sale._id}</h4>
+                    <span className="text-sm text-gray-500">
+                      {sale.count} transactions
+                    </span>
+                  </div>
+                  <div className="text-2xl font-bold text-green-600">
+                    ${sale.totalSales?.toFixed(2) || "0.00"}
+                  </div>
+                </div>
+              )
+            )}
+          </div>
         </div>
 
-        {/* Top Products and Customers */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <TopProductsChart data={topProductsData || []} />
-          <TopCustomersTable data={topCustomersData || []} />
+        {/* Purchase Analytics Cards */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <div className="h-1 w-6 bg-blue-500 rounded"></div>
+            Purchase Analytics
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {purchasesData?.map(
+              (
+                purchase: {
+                  _id: string;
+                  count: number;
+                  totalPurchases: number;
+                },
+                index: number
+              ) => (
+                <div
+                  key={index}
+                  className="bg-white p-4 rounded-lg border shadow-sm"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-900">
+                      {purchase._id}
+                    </h4>
+                    <span className="text-sm text-gray-500">
+                      {purchase.count} transactions
+                    </span>
+                  </div>
+                  <div className="text-2xl font-bold text-blue-600">
+                    ${purchase.totalPurchases?.toFixed(2) || "0.00"}
+                  </div>
+                </div>
+              )
+            )}
+          </div>
         </div>
 
-        {/* Low Stock Items */}
-        <LowStockItemsTable data={lowStockData || []} />
+        {/* Expense Analytics Cards */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <div className="h-1 w-6 bg-red-500 rounded"></div>
+            Expense Analytics
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {expensesData?.map(
+              (
+                expense: { _id: string; count: number; totalExpenses: number },
+                index: number
+              ) => (
+                <div
+                  key={index}
+                  className="bg-white p-4 rounded-lg border shadow-sm"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-900">{expense._id}</h4>
+                    <span className="text-sm text-gray-500">
+                      {expense.count} transactions
+                    </span>
+                  </div>
+                  <div className="text-2xl font-bold text-red-600">
+                    ${expense.totalExpenses?.toFixed(2) || "0.00"}
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+
+        {/* Payment Methods Cards */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <div className="h-1 w-6 bg-purple-500 rounded"></div>
+            Payment Methods
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {paymentMethodsData?.map(
+              (
+                payment: { _id: string; count: number; totalAmount: number },
+                index: number
+              ) => (
+                <div
+                  key={index}
+                  className="bg-white p-4 rounded-lg border shadow-sm"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-900 capitalize">
+                      {payment._id?.replace("_", " ")}
+                    </h4>
+                    <span className="text-sm text-gray-500">
+                      {payment.count} transactions
+                    </span>
+                  </div>
+                  <div className="text-2xl font-bold text-purple-600">
+                    ${payment.totalAmount?.toFixed(2) || "0.00"}
+                  </div>
+                  <div className="text-sm text-gray-500 mt-1">
+                    {(
+                      (payment.totalAmount /
+                        (paymentMethodsData?.reduce(
+                          (sum: number, p: { totalAmount: number }) =>
+                            sum + p.totalAmount,
+                          0
+                        ) || 1)) *
+                      100
+                    ).toFixed(1)}
+                    % of total
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+
+        {/* Top Selling Products Cards */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <div className="h-1 w-6 bg-orange-500 rounded"></div>
+            Top Selling Products
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {topProductsData?.map(
+              (
+                product: {
+                  itemName: string;
+                  totalRevenue: number;
+                  totalQuantity: number;
+                },
+                index: number
+              ) => (
+                <div
+                  key={index}
+                  className="bg-white p-4 rounded-lg border shadow-sm"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-900">
+                      {product.itemName}
+                    </h4>
+                    <span className="text-sm text-gray-500">#{index + 1}</span>
+                  </div>
+                  <div className="text-2xl font-bold text-orange-600">
+                    ${product.totalRevenue?.toFixed(2) || "0.00"}
+                  </div>
+                  <div className="text-sm text-gray-500 mt-1">
+                    {product.totalQuantity} units sold
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    ${(product.totalRevenue / product.totalQuantity).toFixed(2)}{" "}
+                    avg price
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+
+        {/* Top Customers Cards */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <div className="h-1 w-6 bg-indigo-500 rounded"></div>
+            Top Customers
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {topCustomersData?.map(
+              (
+                customer: {
+                  name: string;
+                  totalSpent: number;
+                  transactionCount: number;
+                },
+                index: number
+              ) => (
+                <div
+                  key={index}
+                  className="bg-white p-4 rounded-lg border shadow-sm"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-900">
+                      {customer.name}
+                    </h4>
+                    <span className="text-sm text-gray-500">#{index + 1}</span>
+                  </div>
+                  <div className="text-2xl font-bold text-indigo-600">
+                    ${customer.totalSpent?.toFixed(2) || "0.00"}
+                  </div>
+                  <div className="text-sm text-gray-500 mt-1">
+                    {customer.transactionCount} transactions
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    $
+                    {(customer.totalSpent / customer.transactionCount).toFixed(
+                      2
+                    )}{" "}
+                    avg per transaction
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+
+        {/* Low Stock Items Cards */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <div className="h-1 w-6 bg-yellow-500 rounded"></div>
+            Low Stock Items
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {lowStockData?.map(
+              (
+                item: {
+                  itemName: string;
+                  currentStock: number;
+                  lowStockThreshold: number;
+                  lowStockStatus: string;
+                  unitPrice: number;
+                },
+                index: number
+              ) => (
+                <div
+                  key={index}
+                  className="bg-white p-4 rounded-lg border shadow-sm"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-900">
+                      {item.itemName}
+                    </h4>
+                    <span
+                      className={`px-2 py-1 text-xs rounded-full ${
+                        item.lowStockStatus === "critical"
+                          ? "bg-red-100 text-red-800"
+                          : item.lowStockStatus === "new"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-gray-100 text-gray-800"
+                      }`}
+                    >
+                      {item.lowStockStatus}
+                    </span>
+                  </div>
+                  <div className="text-2xl font-bold text-yellow-600">
+                    {item.currentStock} units
+                  </div>
+                  <div className="text-sm text-gray-500 mt-1">
+                    Threshold: {item.lowStockThreshold}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    ${item.unitPrice?.toFixed(2)} per unit
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </div>
       </div>
+
+      {/* Filter Modal */}
+      <FilterModal
+        isOpen={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+        onFilter={handleFilter}
+        isLoading={isFilterLoading}
+      />
     </Layout>
   );
 }

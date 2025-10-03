@@ -63,7 +63,7 @@ function TodayPurchasesChart() {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-700">
-              Today's Purchases
+              Today&apos;s Purchases
             </h3>
             <p className="text-sm text-gray-500">
               Procurement and supply chain

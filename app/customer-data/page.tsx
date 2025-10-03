@@ -16,8 +16,6 @@ import {
   Cell,
   LineChart,
   Line,
-  ScatterChart,
-  Scatter,
 } from "recharts";
 
 // Static data for customer analytics
@@ -349,7 +347,7 @@ export default function CustomerDataPage() {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({ segment, percentage }) =>
+                    label={({ segment, percentage }: { segment: string; percentage: number }) =>
                       `${segment} ${percentage}%`
                     }
                     outerRadius={80}

@@ -3,7 +3,6 @@
 import React from "react";
 import {
   TrendingUp,
-  TrendingDown,
   DollarSign,
   ShoppingCart,
   Receipt,

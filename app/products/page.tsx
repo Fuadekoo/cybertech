@@ -14,6 +14,38 @@ import {
   deleteProductVariant,
 } from "../../actions/products";
 
+// TypeScript interfaces
+interface Product {
+  _id: string;
+  itemName: string;
+  category: string;
+  description: string;
+  variants?: ProductVariant[];
+}
+
+interface ProductVariant {
+  _id: string;
+  variantCode: string;
+  variantSku: string;
+  variantName: string;
+  unitPrice: number;
+  productId: string;
+}
+
+interface ProductFormData {
+  itemName: string;
+  category: string;
+  description: string;
+}
+
+interface VariantFormData {
+  variantCode: string;
+  variantSku: string;
+  variantName: string;
+  unitPrice: number;
+  productId: string;
+}
+
 // Product Form Component
 function ProductForm({
   product,
@@ -21,8 +53,8 @@ function ProductForm({
   onCancel,
   isLoading,
 }: {
-  product?: any;
-  onSave: (data: any) => void;
+  product?: Product;
+  onSave: (data: ProductFormData) => void;
   onCancel: () => void;
   isLoading: boolean;
 }) {
@@ -116,8 +148,8 @@ function VariantForm({
   isLoading,
 }: {
   productId: string;
-  variant?: any;
-  onSave: (data: any) => void;
+  variant?: ProductVariant;
+  onSave: (data: VariantFormData) => void;
   onCancel: () => void;
   isLoading: boolean;
 }) {
@@ -226,8 +258,10 @@ function VariantForm({
 export default function ProductsPage() {
   const [showProductForm, setShowProductForm] = useState(false);
   const [showVariantForm, setShowVariantForm] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<any>(null);
-  const [editingVariant, setEditingVariant] = useState<any>(null);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [editingVariant, setEditingVariant] = useState<ProductVariant | null>(
+    null
+  );
   const [selectedProductId, setSelectedProductId] = useState<string>("");
 
   // Data fetching
@@ -291,7 +325,7 @@ export default function ProductsPage() {
     }
   );
 
-  const handleProductSave = (data: any) => {
+  const handleProductSave = (data: ProductFormData) => {
     if (editingProduct) {
       executeUpdateProduct(editingProduct.id, data);
     } else {
@@ -299,7 +333,7 @@ export default function ProductsPage() {
     }
   };
 
-  const handleVariantSave = (data: any) => {
+  const handleVariantSave = (data: VariantFormData) => {
     if (editingVariant) {
       executeUpdateVariant(editingVariant.id, data);
     } else {
@@ -307,12 +341,12 @@ export default function ProductsPage() {
     }
   };
 
-  const handleEditProduct = (product: any) => {
+  const handleEditProduct = (product: Product) => {
     setEditingProduct(product);
     setShowProductForm(true);
   };
 
-  const handleEditVariant = (variant: any) => {
+  const handleEditVariant = (variant: ProductVariant) => {
     setEditingVariant(variant);
     setSelectedProductId(variant.productId);
     setShowVariantForm(true);

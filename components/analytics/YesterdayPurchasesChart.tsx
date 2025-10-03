@@ -63,7 +63,7 @@ function YesterdayPurchasesChart() {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-700">
-              Yesterday's Purchases
+              Yesterday&apos;s Purchases
             </h3>
             <p className="text-sm text-gray-500">
               Previous day procurement data
@@ -133,7 +133,7 @@ function YesterdayPurchasesChart() {
       {/* Purchase Chart */}
       <div className="mb-6">
         <h4 className="text-md font-semibold text-gray-700 mb-4">
-          Yesterday's Purchases by Hour
+          Yesterday&apos;s Purchases by Hour
         </h4>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart
